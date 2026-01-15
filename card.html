@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Card Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f0f1e;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+        }
+
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .card-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 20px 0;
+        }
+
+        .cards-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .cards-container::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .cards-container::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+
+        .virtual-card {
+            min-width: 400px;
+            height: 250px;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .virtual-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-gradient-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-gradient-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .card-gradient-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .card-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(circle, white 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .card-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .card-type {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .card-chip {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .card-number {
+            font-size: 22px;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        .card-holder {
+            font-size: 14px;
+        }
+
+        .card-holder-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .card-expiry {
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .card-controls {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-controls h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .control-btn {
+            padding: 20px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-2px);
+        }
+
+        .control-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .control-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .spending-limits {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .limit-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .limit-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .limit-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .limit-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        .transactions-panel {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .transactions-panel h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .transaction-item:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(5px);
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .transaction-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .transaction-icon.shopping {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        .transaction-icon.food {
+            background: rgba(245, 87, 108, 0.2);
+            color: #f5576c;
+        }
+
+        .transaction-icon.transport {
+            background: rgba(79, 172, 254, 0.2);
+            color: #4facfe;
+        }
+
+        .transaction-icon.entertainment {
+            background: rgba(240, 147, 251, 0.2);
+            color: #f093fb;
+        }
+
+        .transaction-details h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .transaction-details p {
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .stat-change.positive {
+            color: #4ade80;
+        }
+
+        .stat-change.negative {
+            color: #f87171;
+        }
+
+        .security-panel {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .security-panel h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .security-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle {
+            width: 50px;
+            height: 26px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle.active {
+            background: #667eea;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle.active .toggle-slider {
+            transform: translateX(24px);
+        }
+
+        .notifications {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .notifications h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .notification-item {
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 3px solid #667eea;
+        }
+
+        .notification-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notification-text {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .virtual-card {
+                min-width: 350px;
+            }
+
+            .control-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .virtual-card {
+                min-width: 300px;
+                height: 200px;
+                padding: 20px;
+            }
+
+            .card-number {
+                font-size: 18px;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">VirtualCard Pro</div>
+            <div class="header-actions">
+                <button class="btn btn-secondary">Settings</button>
+                <button class="btn btn-primary">+ Create New Card</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="left-section">
+                <!-- Card Carousel -->
+                <div class="card-carousel">
+                    <div class="cards-container">
+                        <div class="virtual-card card-gradient-1">
+                            <div class="card-pattern"></div>
+                            <div class="card-content">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-type">Virtual Debit</div>
+                                    </div>
+                                    <div class="card-logo">VISA</div>
+                                </div>
+                                <div class="card-chip"></div>
+                                <div class="card-number">4532 •••• •••• 8829</div>
+                                <div class="card-footer">
+                                    <div class="card-holder">
+                                        <div style="opacity: 0.7; font-size: 12px;">CARD HOLDER</div>
+                                        <div class="card-holder-name">OLABANJI</div>
+                                    </div>
+                                    <div class="card-expiry">
+                                        <div style="opacity: 0.7; font-size: 12px;">VALID THRU</div>
+                                        <div style="font-weight: 600; margin-top: 3px;">12/28</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="virtual-card card-gradient-2">
+                            <div class="card-pattern"></div>
+                            <div class="card-content">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-type">Virtual Credit</div>
+                                    </div>
+                                    <div class="card-logo">MC</div>
+                                </div>
+                                <div class="card-chip"></div>
+                                <div class="card-number">5412 •••• •••• 3345</div>
+                                <div class="card-footer">
+                                    <div class="card-holder">
+                                        <div style="opacity: 0.7; font-size: 12px;">CARD HOLDER</div>
+                                        <div class="card-holder-name">OLABANJI</div>
+                                    </div>
+                                    <div class="card-expiry">
+                                        <div style="opacity: 0.7; font-size: 12px;">VALID THRU</div>
+                                        <div style="font-weight: 600; margin-top: 3px;">09/27</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="virtual-card card-gradient-3">
+                            <div class="card-pattern"></div>
+                            <div class="card-content">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-type">Virtual Prepaid</div>
+                                    </div>
+                                    <div class="card-logo">AMEX</div>
+                                </div>
+                                <div class="card-chip"></div>
+                                <div class="card-number">3782 •••• •••• 1007</div>
+                                <div class="card-footer">
+                                    <div class="card-holder">
+                                        <div style="opacity: 0.7; font-size: 12px;">CARD HOLDER</div>
+                                        <div class="card-holder-name">OLABANJI</div>
+                                    </div>
+                                    <div class="card-expiry">
+                                        <div style="opacity: 0.7; font-size: 12px;">VALID THRU</div>
+                                        <div style="font-weight: 600; margin-top: 3px;">06/29</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Controls -->
+                <div class="card-controls">
+                    <h2>Card Management</h2>
+                    <div class="control-grid">
+                        <div class="control-btn">
+                            <div class="control-icon">🔒</div>
+                            <div class="control-label">Lock Card</div>
+                        </div>
+                        <div class="control-btn">
+                            <div class="control-icon">👁️</div>
+                            <div class="control-label">View Details</div>
+                        </div>
+                        <div class="control-btn">
+                            <div class="control-icon">📊</div>
+                            <div class="control-label">Analytics</div>
+                        </div>
+                        <div class="control-btn">
+                            <div class="control-icon">🔄</div>
+                            <div class="control-label">Replace Card</div>
+                        </div>
+                        <div class="control-btn">
+                            <div class="control-icon">⚙️</div>
+                            <div class="control-label">Settings</div>
+                        </div>
+                        <div class="control-btn">
+                            <div class="control-icon">🗑️</div>
+                            <div class="control-label">Delete Card</div>
+                        </div>
+                    </div>
+
+                    <div class="spending-limits">
+                        <h3 style="margin-bottom: 15px; font-size: 16px;">Spending Limits</h3>
+                        <div class="limit-item">
+                            <span style="font-size: 14px;">Daily</span>
+                            <div class="limit-bar">
+                                <div class="limit-progress" style="width: 65%;"></div>
+                            </div>
+                            <span style="font-size: 14px; font-weight: 600;">₦325k / ₦500k</span>
+                        </div>
+                        <div class="limit-item">
+                            <span style="font-size: 14px;">Weekly</span>
+                            <div class="limit-bar">
+                                <div class="limit-progress" style="width: 42%;"></div>
+                            </div>
+                            <span style="font-size: 14px; font-weight: 600;">₦840k / ₦2M</span>
+                        </div>
+                        <div class="limit-item">
+                            <span style="font-size: 14px;">Monthly</span>
+                            <div class="limit-bar">
+                                <div class="limit-progress" style="width: 28%;"></div>
+                            </div>
+                            <span style="font-size: 14px; font-weight: 600;">₦2.8M / ₦10M</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="transactions-panel">
+                    <h2>Recent Transactions</h2>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-icon shopping">🛒</div>
+                            <div class="transaction-details">
+                                <h4>Amazon Shopping</h4>
+                                <p>Today, 2:30 PM</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">-₦45,200</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-icon food">🍕</div>
+                            <div class="transaction-details">
+                                <h4>Domino's Pizza</h4>
+                                <p>Today, 12:15 PM</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">-₦8,500</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-icon transport">🚗</div>
+                            <div class="transaction-details">
+                                <h4>Uber Ride</h4>
+                                <p>Yesterday, 6:45 PM</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">-₦3,200</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-icon entertainment">🎬</div>
+                            <div class="transaction-details">
+                                <h4>Netflix Subscription</h4>
+                                <p>Jan 10, 2026</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">-₦6,500</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <div class="transaction-icon shopping">🏪</div>
+                            <div class="transaction-details">
+                                <h4>Shoprite Groceries</h4>
+                                <p>Jan 09, 2026</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">-₦28,750</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Spent</div>
+                        <div class="stat-value">₦325,450</div>
+                        <div class="stat-change negative">↑ 12.5%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Saved</div>
+                        <div class="stat-value">₦124,800</div>
+                        <div class="stat-change positive">↑ 8.3%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Cards</div>
+                        <div class="stat-value">3</div>
+                        <div class="stat-change">of 5 available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Cashback</div>
+                        <div class="stat-value">₦4,280</div>
+                        <div class="stat-change positive">↑ 24.1%</div>
+                    </div>
+                </div>
+
+                <!-- Security Panel -->
+                <div class="security-panel">
+                    <h2>Security Settings</h2>
+                    <div class="security-item">
+                        <div>
+                            <div style="font-size: 14px; margin-bottom: 3px;">Online Transactions</div>
+                            <div style="font-size: 12px; opacity: 0.6;">Enable online purchases</div>
+                        </div>
+                        <div class="toggle active" onclick="this.classList.toggle('active')">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    <div class="security-item">
+                        <div>
+                            <div style="font-size: 14px; margin-bottom: 3px;">Contactless Payments</div>
+                            <div style="font-size: 12px; opacity: 0.6;">NFC tap-to-pay</div>
+                        </div>
+                        <div class="toggle active" onclick="this.classList.toggle('active')">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    <div class="security-item">
+                        <div>
+                            <div style="font-size: 14px; margin-bottom: 3px;">ATM Withdrawals</div>
+                            <div style="font-size: 12px; opacity: 0.6;">Cash withdrawals</div>
+                        </div>
+                        <div class="toggle" onclick="this.classList.toggle('active')">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    <div class="security-item">
+                        <div>
+                            <div style="font-size: 14px; margin-bottom: 3px;">International Transactions</div>
+                            <div style="font-size: 12px; opacity: 0.6;">Cross-border payments</div>
+                        </div>
+                        <div class="toggle active" onclick="this.classList.toggle('active')">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    <div class="security-item">
+                        <div>
+                            <div style="font-size: 14px; margin-bottom: 3px;">Transaction Alerts</div>
+                            <div style="font-size: 12px; opacity: 0.6;">Push notifications</div>
+                        </div>
+                        <div class="toggle active" onclick="this.classList.toggle('active')">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="notifications">
+                    <h2>Recent Alerts</h2>
+                    <div class="notification-item">
+                        <div class="notification-title">Transaction Approved</div>
+                        <div class="notification-text">Your purchase at Amazon was successful • 2:30 PM</div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-title">Spending Limit Alert</div>
+                        <div class="notification-text">You've used 65% of your daily limit • 11:45 AM</div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-title">Card Security</div>
+                        <div class="notification-text">New login detected from Lagos, NG • Yesterday</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
