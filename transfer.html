@@ -742,7 +742,7 @@
                 // Get amount
                 const activeTab = document.querySelector('.tab-content.active');
                 const amountInput = activeTab.querySelector('input[type="number"]');
-                const amount = parseFloat(amountInput.value).toLocaleString('en-EN', { style: 'currency', currency: 'Dollar' });
+                const amount = parseFloat(amountInput.value).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
                 document.getElementById('receiptAmount').textContent = amount;
 
                 // Get recipient
