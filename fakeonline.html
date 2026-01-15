@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SecureBank - Dashboard</title>
     <script>
-   
+    // Security Guard: Checks if the user actually logged in
+    if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'bank.html';
+    }
 </script>
     <style>
         * {
@@ -337,3 +340,4 @@
 </body>
 
 </html>
+
