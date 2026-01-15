@@ -467,7 +467,7 @@
 
             <div class="balance-display">
                 <div class="balance-label">Available Balance</div>
-                <div class="balance-amount">₦2,458,750.00</div>
+                <div class="balance-amount">$2,458,750.00</div>
             </div>
 
             <div class="transfer-tabs">
@@ -482,8 +482,8 @@
                     <div class="form-group">
                         <label class="form-label">From Account</label>
                         <select class="form-select" id="fromAccount" required>
-                            <option value="0123456789">Savings Account - 0123456789 (₦2,458,750.00)</option>
-                            <option value="0123456790">Current Account - 0123456790 (₦850,000.00)</option>
+                            <option value="0123456789">Savings Account - 0123456789 ($2,458,750.00)</option>
+                            <option value="0123456790">Current Account - 0123456790 ($850,000.00)</option>
                         </select>
                     </div>
 
@@ -497,13 +497,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Amount (₦)</label>
+                        <label class="form-label">Amount ($)</label>
                         <input type="number" class="form-input" id="amount1" placeholder="0.00" min="1" step="0.01" required>
                         <div class="quick-amounts">
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount1', 10000)">₦10,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount1', 50000)">₦50,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount1', 100000)">₦100,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount1', 500000)">₦500,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount1', 10000)">$10,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount1', 50000)">$50,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount1', 100000)">$100,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount1', 500000)">$500,000</button>
                         </div>
                     </div>
 
@@ -526,12 +526,12 @@
                         <label class="form-label">Bank Name</label>
                         <select class="form-select" id="bankName" required>
                             <option value="">Select bank</option>
-                            <option value="GTBank">GTBank</option>
-                            <option value="Access Bank">Access Bank</option>
-                            <option value="First Bank">First Bank</option>
-                            <option value="UBA">UBA</option>
-                            <option value="Zenith Bank">Zenith Bank</option>
-                            <option value="Stanbic IBTC">Stanbic IBTC</option>
+                            <option value="GTBank">American Express</option>
+                            <option value="Access Bank">Wells Fargo</option>
+                            <option value="First Bank">Credit Union</option>
+                            <option value="UBA">TD bank</option>
+                            <option value="Zenith Bank">PNC</option>
+                            <option value="Stanbic IBTC">Chase bank</option>
                         </select>
                     </div>
 
@@ -546,13 +546,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Amount (₦)</label>
+                        <label class="form-label">Amount ($)</label>
                         <input type="number" class="form-input" id="amount2" placeholder="0.00" min="1" step="0.01" required>
                         <div class="quick-amounts">
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount2', 10000)">₦10,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount2', 50000)">₦50,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount2', 100000)">₦100,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount2', 500000)">₦500,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount2', 10000)">$10,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount2', 50000)">$50,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount2', 100000)">$100,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount2', 500000)">$500,000</button>
                         </div>
                     </div>
 
@@ -571,35 +571,35 @@
             <!-- Beneficiaries -->
             <div class="tab-content" id="beneficiary">
                 <div class="beneficiary-list">
-                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Adebayo', '0987654321', 'GTBank')">
+                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Author Davis', '0987654321', 'Chase BANK')">
                         <div class="beneficiary-avatar">A</div>
-                        <div class="beneficiary-name">Adebayo</div>
-                        <div class="beneficiary-account">GTBank • 0987654321</div>
+                        <div class="beneficiary-name">Author Davis</div>
+                        <div class="beneficiary-account">CHASE BANK • 0987654321</div>
                     </div>
-                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Chinwe', '1122334455', 'Access Bank')">
-                        <div class="beneficiary-avatar">C</div>
-                        <div class="beneficiary-name">Chinwe</div>
-                        <div class="beneficiary-account">Access • 1122334455</div>
+                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Anna Faith', '1122334455', 'Wells Fargo Bank')">
+                        <div class="beneficiary-avatar">A</div>
+                        <div class="beneficiary-name">Anna Faith</div>
+                        <div class="beneficiary-account">Wells Fargo • 1122334455</div>
                     </div>
-                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Emeka', '5566778899', 'Zenith Bank')">
-                        <div class="beneficiary-avatar">E</div>
-                        <div class="beneficiary-name">Emeka</div>
-                        <div class="beneficiary-account">Zenith • 5566778899</div>
-                    </div>
-                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Fatima', '9988776655', 'First Bank')">
-                        <div class="beneficiary-avatar">F</div>
-                        <div class="beneficiary-name">Fatima</div>
-                        <div class="beneficiary-account">First • 9988776655</div>
-                    </div>
-                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Tunde', '4433221100', 'UBA')">
+                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Tammy Batson', '5566778899', 'TD BANK')">
                         <div class="beneficiary-avatar">T</div>
-                        <div class="beneficiary-name">Tunde</div>
-                        <div class="beneficiary-account">UBA • 4433221100</div>
+                        <div class="beneficiary-name">Tammy Batson</div>
+                        <div class="beneficiary-account">TD • 5566778899</div>
                     </div>
-                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Ngozi', '6677889900', 'Stanbic IBTC')">
-                        <div class="beneficiary-avatar">N</div>
-                        <div class="beneficiary-name">Ngozi</div>
-                        <div class="beneficiary-account">Stanbic • 6677889900</div>
+                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Daniel Prince', '9988776655', 'Credit Union Bank')">
+                        <div class="beneficiary-avatar">D</div>
+                        <div class="beneficiary-name">Daniel Prince</div>
+                        <div class="beneficiary-account">Credit Union • 9988776655</div>
+                    </div>
+                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Sam Hunter', '4433221100', 'American Express')">
+                        <div class="beneficiary-avatar">S</div>
+                        <div class="beneficiary-name">Sam Hunter</div>
+                        <div class="beneficiary-account">American Express • 4433221100</div>
+                    </div>
+                    <div class="beneficiary-card" onclick="selectBeneficiary(this, 'Lexie Carlson', '6677889900', 'PNC')">
+                        <div class="beneficiary-avatar">L</div>
+                        <div class="beneficiary-name">Lexie Carlson</div>
+                        <div class="beneficiary-account">PNC • 6677889900</div>
                     </div>
                 </div>
 
@@ -607,13 +607,13 @@
                     <input type="hidden" id="selectedBeneficiary">
 
                     <div class="form-group">
-                        <label class="form-label">Amount (₦)</label>
+                        <label class="form-label">Amount ($)</label>
                         <input type="number" class="form-input" id="amount3" placeholder="0.00" min="1" step="0.01" required>
                         <div class="quick-amounts">
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount3', 10000)">₦10,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount3', 50000)">₦50,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount3', 100000)">₦100,000</button>
-                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount3', 500000)">₦500,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount3', 10000)">$10,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount3', 50000)">$50,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount3', 100000)">$100,000</button>
+                            <button type="button" class="quick-amount-btn" onclick="setAmount('amount3', 500000)">$500,000</button>
                         </div>
                     </div>
 
@@ -645,11 +645,11 @@
                 </div>
                 <div class="receipt-item">
                     <span class="receipt-label">Amount</span>
-                    <span class="receipt-value" id="receiptAmount">₦50,000.00</span>
+                    <span class="receipt-value" id="receiptAmount">$50,000.00</span>
                 </div>
                 <div class="receipt-item">
                     <span class="receipt-label">Recipient</span>
-                    <span class="receipt-value" id="receiptRecipient">Adebayo</span>
+                    <span class="receipt-value" id="receiptRecipient">Author Davis</span>
                 </div>
                 <div class="receipt-item">
                     <span class="receipt-label">Date & Time</span>
@@ -724,7 +724,7 @@
             const accountNameInput = document.getElementById('accountName');
             
             if (accountNumberInput && accountNumberInput.value.length === 10) {
-                accountNameInput.value = 'JOHN DOE'; // Simulated name lookup
+                accountNameInput.value = 'Author Davis'; // Simulated name lookup
             }
 
             // Show success modal after short delay (simulating processing)
@@ -742,7 +742,7 @@
                 // Get amount
                 const activeTab = document.querySelector('.tab-content.active');
                 const amountInput = activeTab.querySelector('input[type="number"]');
-                const amount = parseFloat(amountInput.value).toLocaleString('en-NG', { style: 'currency', currency: 'NGN' });
+                const amount = parseFloat(amountInput.value).toLocaleString('en-EN', { style: 'currency', currency: 'Dollar' });
                 document.getElementById('receiptAmount').textContent = amount;
 
                 // Get recipient
@@ -776,7 +776,7 @@
                 const accountNameInput = document.getElementById('accountName');
                 if (this.value.length === 10) {
                     setTimeout(() => {
-                        accountNameInput.value = 'JOHN DOE'; // Simulated verification
+                        accountNameInput.value = 'Author Davis'; // Simulated verification
                     }, 500);
                 } else {
                     accountNameInput.value = '';
@@ -785,4 +785,5 @@
         }
     </script>
 </body>
+
 </html>
